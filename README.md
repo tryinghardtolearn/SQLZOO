@@ -1,5 +1,5 @@
 # SQLZOO Guest House Assessment
-## Hard Problems (Not yet finished)
+## Hard Problems (Not yet finish)
 ###11
 Coincidence. Have two guests with the same surname ever stayed in the hotel on the evening? 
 Show the last name and both first names. Do not include duplicates.
