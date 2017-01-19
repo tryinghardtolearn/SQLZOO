@@ -1,0 +1,24 @@
+#11 
+Select a.last_name, a.first_name, b.first_name  
+From guest a join guest b on a.last_name = b.last_name and a.id<b.id  
+Where exists (Select bka.guest_id, bkb.guest_id
+          From booking bka join booking bkb on bka.guest_id<>bkb.guest_id  
+          Where bka.guest_id = a.id  
+            and bkb.guest_id=b.id 
+            and date_add(bkb.booking_date, interval bkb.nights day)>(bka.booking_date)
+            and (bkb.booking_date<bka.booking_date) 
+          Union All
+          Select bka.guest_id, bkb.guest_id  
+          From booking bka join booking bkb on bka.guest_id<>bkb.guest_id   
+          Where bka.guest_id = a.id
+            and bkb.guest_id=b.id
+            and date_add(bka.booking_date, interval bka.nights day)>(bkb.booking_date)
+            and (bka.booking_date<bkb.booking_date)
+          Union All
+          Select bka.guest_id, bkb.guest_id
+          From booking bka join booking bkb on bka.guest_id<>bkb.guest_id
+          Where bka.guest_id = a.id
+            and bkb.guest_id=b.id
+            and (bka.booking_date=bkb.booking_date) 
+  ) 
+  Order by a.last_name  
